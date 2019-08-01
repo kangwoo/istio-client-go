@@ -24,8 +24,6 @@ type ServiceRoleSpec struct {
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // ServiceRole is the Schema for the serviceroles API
-// +k8s:openapi-gen=true
-// +kubebuilder:subresource:status
 type ServiceRole struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

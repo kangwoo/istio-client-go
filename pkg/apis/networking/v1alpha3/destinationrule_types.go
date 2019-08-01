@@ -1,4 +1,4 @@
-package v1alpha1
+package v1alpha3
 
 import (
 	"bufio"
@@ -7,50 +7,51 @@ import (
 
 	"github.com/gogo/protobuf/jsonpb"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	istiov1alpha1 "istio.io/api/rbac/v1alpha1"
+	istiov1alpha3 "istio.io/api/networking/v1alpha3"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// ServiceRoleBindingSpec defines the desired state of ServiceRoleBinding
-type ServiceRoleBindingSpec struct {
+// DestinationRuleSpec defines the desired state of DestinationRule
+type DestinationRuleSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
-	istiov1alpha1.ServiceRoleBinding
+	istiov1alpha3.DestinationRule
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// ServiceRoleBinding is the Schema for the servicerolebindings API
-type ServiceRoleBinding struct {
+// DestinationRule is the Schema for the destinationrules API
+type DestinationRule struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ServiceRoleBindingSpec   `json:"spec,omitempty"`
+	Spec   DestinationRuleSpec   `json:"spec,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// ServiceRoleBindingList contains a list of ServiceRoleBinding
-type ServiceRoleBindingList struct {
+// DestinationRuleList contains a list of DestinationRule
+type DestinationRuleList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []ServiceRoleBinding `json:"items"`
+	Items           []DestinationRule `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&ServiceRoleBinding{}, &ServiceRoleBindingList{})
+	SchemeBuilder.Register(&DestinationRule{}, &DestinationRuleList{})
 }
 
-func (p *ServiceRoleBindingSpec) MarshalJSON() ([]byte, error) {
+
+func (p *DestinationRuleSpec) MarshalJSON() ([]byte, error) {
 	buffer := bytes.Buffer{}
 	writer := bufio.NewWriter(&buffer)
 	marshaler := jsonpb.Marshaler{}
-	err := marshaler.Marshal(writer, &p.ServiceRoleBinding)
+	err := marshaler.Marshal(writer, &p.DestinationRule)
 	if err != nil {
-		log.Printf("Could not marshal ServiceRoleBindingSpec. Error: %v", err)
+		log.Printf("Could not marshal DestinationRuleSpec. Error: %v", err)
 		return nil, err
 	}
 
@@ -58,12 +59,12 @@ func (p *ServiceRoleBindingSpec) MarshalJSON() ([]byte, error) {
 	return buffer.Bytes(), nil
 }
 
-func (p *ServiceRoleBindingSpec) UnmarshalJSON(b []byte) error {
+func (p *DestinationRuleSpec) UnmarshalJSON(b []byte) error {
 	reader := bytes.NewReader(b)
 	unmarshaler := jsonpb.Unmarshaler{}
-	err := unmarshaler.Unmarshal(reader, &p.ServiceRoleBinding)
+	err := unmarshaler.Unmarshal(reader, &p.DestinationRule)
 	if err != nil {
-		log.Printf("Could not unmarshal ServiceRoleBindingSpec. Error: %v", err)
+		log.Printf("Could not unmarshal DestinationRuleSpec. Error: %v", err)
 		return err
 	}
 	return nil
@@ -71,6 +72,6 @@ func (p *ServiceRoleBindingSpec) UnmarshalJSON(b []byte) error {
 
 // DeepCopyInto is a deepcopy function, copying the receiver, writing into out. in must be non-nil.
 // Based of https://github.com/istio/istio/blob/release-0.8/pilot/pkg/config/kube/crd/types.go#L450
-func (in *ServiceRoleBindingSpec) DeepCopyInto(out *ServiceRoleBindingSpec) {
+func (in *DestinationRuleSpec) DeepCopyInto(out *DestinationRuleSpec) {
 	*out = *in
 }

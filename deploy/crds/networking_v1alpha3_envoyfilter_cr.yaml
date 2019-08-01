@@ -1,0 +1,7 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: example-envoyfilter
+spec:
+  # Add fields here
+  size: 3
