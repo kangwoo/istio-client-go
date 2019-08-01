@@ -2,9 +2,10 @@ module github.com/kangwoo/istio-client-go
 
 require (
 	github.com/NYTimes/gziphandler v1.0.1 // indirect
+	github.com/gogo/protobuf v1.2.2-0.20190730201129-28a6bbf47e48
 	github.com/operator-framework/operator-sdk v0.9.1-0.20190729152335-7a35cfc9a7cf
 	github.com/spf13/pflag v1.0.3
-	istio.io/api v0.0.0-20190801054801-27c01d9b4132 // indirect
+	istio.io/api v0.0.0-20190801054801-27c01d9b4132
 	k8s.io/api v0.0.0-20190612125737-db0771252981
 	k8s.io/apimachinery v0.0.0-20190612125636-6a5db36e93ad
 	k8s.io/client-go v11.0.0+incompatible
