@@ -6,14 +6,45 @@
 package v1alpha3
 
 import (
+	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"sigs.k8s.io/controller-runtime/pkg/runtime/scheme"
+
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
+
+
+const GroupName = "networking.istio.io"
 
 var (
 	// SchemeGroupVersion is group version used to register these objects
-	SchemeGroupVersion = schema.GroupVersion{Group: "networking.istio.io", Version: "v1alpha3"}
+	SchemeGroupVersion = schema.GroupVersion{Group: GroupName, Version: "v1alpha3"}
 
-	// SchemeBuilder is used to add go types to the GroupVersionKind scheme
-	SchemeBuilder = &scheme.Builder{GroupVersion: SchemeGroupVersion}
+	SchemeBuilder = runtime.NewSchemeBuilder(addKnownTypes)
+	AddToScheme   = SchemeBuilder.AddToScheme
 )
+
+
+func Kind(kind string) schema.GroupKind {
+	return SchemeGroupVersion.WithKind(kind).GroupKind()
+}
+
+func Resource(resource string) schema.GroupResource {
+	return SchemeGroupVersion.WithResource(resource).GroupResource()
+}
+
+func addKnownTypes(scheme *runtime.Scheme) error {
+	scheme.AddKnownTypes(SchemeGroupVersion,
+		&DestinationRule{},
+		&DestinationRuleList{},
+		&EnvoyFilter{},
+		&EnvoyFilterList{},
+		&Gateway{},
+		&GatewayList{},
+		&ServiceEntry{},
+		&ServiceEntryList{},
+		&VirtualService{},
+		&VirtualServiceList{},
+	)
+	metav1.AddToGroupVersion(scheme, SchemeGroupVersion)
+	return nil
+}
